@@ -1,4 +1,3 @@
-const mongoose = require("mongoose");
 const express = require("express");
 
 // const authController = require("./../Controller/authController");
@@ -22,7 +21,7 @@ const {
   deleteUser,
   updateMe,
   getUser,
-  filterUpdateFields,
+  filterUserUpdateFields,
   getProfile,
 } = require("./../controller/userController");
 // const rockController = require("./../Controller/rockController"); //do not comment or remove
@@ -43,11 +42,16 @@ router.param("id", checkId);
 router.param("token", checkId);
 router.param("filename", checkId);
 
+// router.post("/signup", function(req, res, next) {
+//     console.log("test")
+//     });
+  
+router.get("/", protect, restrictTo("manager"), getAllUsers);
+router.post("/signup",validationRules[2], signUp);
 router.get("/me", protect, getMe, getUser);
-router.post("/signup", validationRules[2], signUp);
 router.post("/login", validationRules[3], login);
 router.get("/logout", logout);
-router.get("/myEdits", protect, getMyEdits);
+router.get("/myEdits", protect);//getMyEdits
 
 router.post("/forgotPassword", validationRules[4], forgotPassword);
 router.patch("/updatePassword", protect, updatePassword);
@@ -74,35 +78,36 @@ router.patch("/resetPassword/:token", resetPassword);
 //   deleteUserProfile
 // );
 
-router
-  .route("/")
-  .get(protect, restrictTo("manager"), getAllUsers) //getAllUsers
-  .post() //export doesnt make sene, create another route
-  .patch(
-    protect,
-    filterUpdateFields(
-      "firstName",
-      "lastName",
-      "email",
-    //   "woreda",
-    //   "city",
-    //   "subCity",
-      "phoneNumber"
-    ),
-    getMe,
-    updateMe
-  )
-  .delete(protect, deleteMe); // deactivate user
-router
-  .route("/:id")
-  .get(protect, restrictTo("manager", "reception", "user"), getUser) //getUser
-  .post() //
-  .patch(
-    protect,
-    restrictTo("manager"),
-    filterUpdateFields("role"),
-    // toggleUserRole
-  ) //toggleUserRole
-  .delete(protect, restrictTo("manager"), deleteUser); //deleteUser
+// router
+//   .route("/")
+//   .get(protect, restrictTo("manager"), getAllUsers) //getAllUsers
+//   .post() //export doesnt make sene, create another route
+//   .patch(
+//     protect,
+//     // filterUserUpdateFields(
+//     //   "firstName",
+//     //   "lastName",
+//     //   "email",
+//     // //   "woreda",
+//     // //   "city",
+//     // //   "subCity",
+//     //   "phoneNumber"
+//     // ),
+//     getMe,
+//     updateMe
+//   )
+//   .delete(protect, deleteMe); // deactivate user
+
+  // router
+//   .route("/:id")
+//   .get(protect, restrictTo("manager", "reception", "user"), getUser) //getUser
+//   .post() //
+//   .patch(
+//     protect,
+//     restrictTo("manager"),
+//     // filterUserUpdateFields("role"),
+//     // toggleUserRole
+//   ) //toggleUserRole
+//   .delete(protect, restrictTo("manager"), deleteUser); //deleteUser
 
 module.exports = router;

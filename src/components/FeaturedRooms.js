@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Title from "./Title";
-import { RoomContext } from "../context";
+import { RoomContext } from "../context/roomContext";
 import Room from "./Room";
 import Loading from "./Loading";
 export default class FeaturedRooms extends Component {
@@ -10,7 +10,7 @@ export default class FeaturedRooms extends Component {
     let { loading, featuredRooms: rooms } = this.context;
 
     rooms = rooms.map(room => {
-      return <Room key={room.id} room={room} />;
+      return <Room key={room._id} room={room} />;
     });
     return (
       <section className="featured-rooms">

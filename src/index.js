@@ -3,15 +3,22 @@ import ReactDOM from "react-dom";
 // import './index.css';
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-import { RoomProvider } from "./context";
+import { RoomProvider } from "./context/roomContext";
+import { UserProvider } from "./context/userContext";
+// import { NavigationProvider } from "./context/navigationContext";
 import { BrowserRouter } from "react-router-dom";
 
 ReactDOM.render(
+<BrowserRouter>
+  {/* <NavigationProvider> */}
   <RoomProvider>
-    <BrowserRouter>
+  <UserProvider>
       <App />
-    </BrowserRouter>
-  </RoomProvider>,
+  </UserProvider>
+  </RoomProvider>
+  {/* </NavigationProvider> */}
+</BrowserRouter>
+  ,
   document.getElementById("root")
 );
 

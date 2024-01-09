@@ -32,18 +32,6 @@ const user = new mongoose.Schema(
       type: Number,
       default: null,
     },
-    // city: {
-    //   type: String,
-    //   default: null,
-    // },
-    // subCity: {
-    //   type: String,
-    //   default: null,
-    // },
-    // woreda: {
-    //   type: String,
-    //   default: null,
-    // },
     password: {
       type: String,
       default: null,
@@ -131,8 +119,8 @@ const user = new mongoose.Schema(
       type: String,
       default: "user",
       enum: {
-        values: ["manager", "reception", "user"],
-        message: "role can only be either reception or manager",
+        values: ["manager", "receptionist", "user"],
+        message: "role can be either reception, manager or user",
       },
     },
     // notificationCount: {
@@ -155,9 +143,9 @@ const user = new mongoose.Schema(
     //   type: Number,
     //   default: 0,
     // },
-    passwordChangedAt: {
-      type: Date,
-    },
+    // passwordChangedAt: {
+    //   type: Date,
+    // },
     passwordResetToken: {
       type: String,
       default: undefined,
@@ -234,25 +222,25 @@ user.methods.createPasswordResetToken = function () {
   return resetToken;
 };
 
-user.toggleMessage = function (id) {
-  this.unreadMessage.shift(id);
-  this.save();
-  return this;
-};
+// user.toggleMessage = function (id) {
+//   this.unreadMessage.shift(id);
+//   this.save();
+//   return this;
+// };
 
-user.methods.toggleMessageCount = function (unreadCount) {
-  this.messageCount = unreadCount;
-  this.save();
-  return this;
-}; //to be reviewed
+// user.methods.toggleMessageCount = function (unreadCount) {
+//   this.messageCount = unreadCount;
+//   this.save();
+//   return this;
+// }; //to be reviewed
 
 user.virtual("fullName").get(function () {
   return this.firstName + " " + this.lastName;
 });
 
-user.virtual("unreadCount").get(function () {
-  return this.unreadMessage.length;
-});
+// user.virtual("unreadCount").get(function () {
+//   // return this.unreadMessage.length;
+// });
 
 const User = new mongoose.model("user", user);
 

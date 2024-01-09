@@ -23,8 +23,8 @@ exports.validationRules = [
       .escape(),
   ],
   [
-    //1 rock temp
-    body("document.title")
+    //1 rock
+    body("name")
       .notEmpty()
       .withMessage("Title can not be empty")
       .trim()

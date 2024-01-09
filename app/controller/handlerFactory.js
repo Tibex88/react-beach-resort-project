@@ -1,28 +1,28 @@
 const mongoose = require("mongoose");
-const Grid = require("gridfs-stream");
+// const Grid = require("gridfs-stream");
 const APIError = require("../utils/apiError");
 const catchAsync = require("../utils/catchAsync");
-const transaction = require("../utils/transaction");
+// const transaction = require("../utils/transaction");
 const APIFeatures = require("../utils/apiFeatures");
-// const dbConn = require("../config/db_Connection")
+const dbConn = require("../config/db_Connection")
 // const dbAuth = require("../config/db_Authentication");
 require("events").EventEmitter.prototype._maxListeners = 70;
 require("events").defaultMaxListeners = 70;
 // let gfs;
-let gridfs;
-const conn = mongoose.connections[0];
+// let gridfs;
+// const conn = mongoose.connections[0];
 
-conn.once("open", () => {
-  gridfsMedia = new mongoose.mongo.GridFSBucket(conn.db, {
-    bucketName: "media",
-  });
-});
+// conn.once("open", () => {
+//   gridfsMedia = new mongoose.mongo.GridFSBucket(conn.db, {
+//     bucketName: "media",
+//   });
+// });
 
-conn.once("open", () => {
-  gridfsProfile = new mongoose.mongo.GridFSBucket(conn.db, {
-    bucketName: "userProfile",
-  });
-});
+// conn.once("open", () => {
+//   gridfsProfile = new mongoose.mongo.GridFSBucket(conn.db, {
+//     bucketName: "userProfile",
+//   });
+// });
 
 exports.getOne = (Model) =>
   catchAsync(async (req, res, next) => {
@@ -160,67 +160,67 @@ exports.createOne = (Model) =>
     });
   });
 
-exports.getOneMedia = (collectionName) =>
-  catchAsync(async (req, res, next) => {
-    console.log(req.params.filename);
-    if (collectionName == "userProfile") gridfs = gridfsProfile;
-    else if (collectionName == "media") gridfs = gridfsMedia;
+// exports.getOneMedia = (collectionName) =>
+//   catchAsync(async (req, res, next) => {
+//     console.log(req.params.filename);
+//     if (collectionName == "userProfile") gridfs = gridfsProfile;
+//     else if (collectionName == "media") gridfs = gridfsMedia;
 
-    const result = await gridfs.find({
-      filename: req.params.filename,
-    });
-    var filename = "";
-    await result.forEach((doc) => {
-      filename = doc.filename;
-      return;
-    });
-    const readstream = await gridfs.openDownloadStreamByName(filename);
+//     const result = await gridfs.find({
+//       filename: req.params.filename,
+//     });
+//     var filename = "";
+//     await result.forEach((doc) => {
+//       filename = doc.filename;
+//       return;
+//     });
+//     const readstream = await gridfs.openDownloadStreamByName(filename);
 
-    readstream
-      .on("data", async (chunk) => {
-        string = await chunk.toString("base64");
+//     readstream
+//       .on("data", async (chunk) => {
+//         string = await chunk.toString("base64");
 
-        return res.status(200).json({
-          status: "success",
-          data: string,
-        });
-      })
-      .on("end", function () {
-        console.log("end");
-      })
-      .on("error", (err) => {
-        console.log(err, "the error");
-      });
-  });
+//         return res.status(200).json({
+//           status: "success",
+//           data: string,
+//         });
+//       })
+//       .on("end", function () {
+//         console.log("end");
+//       })
+//       .on("error", (err) => {
+//         console.log(err, "the error");
+//       });
+//   });
 
-exports.updateOneMedia = (collectionName) =>
-  catchAsync(async (req, res, next) => {
-    gfs.collection(collectionName);
-    // gfs.remove({_id:})
-  });
+// exports.updateOneMedia = (collectionName) =>
+//   catchAsync(async (req, res, next) => {
+//     gfs.collection(collectionName);
+//     // gfs.remove({_id:})
+//   });
 
-exports.deleteOneMedia = (collectionName) =>
-  catchAsync(async (req, res, next) => {
-    if (collectionName == "userProfile") gridfs = gridfsProfile;
-    else if (collectionName == "media") gridfs = gridfsMedia;
+// exports.deleteOneMedia = (collectionName) =>
+//   catchAsync(async (req, res, next) => {
+//     if (collectionName == "userProfile") gridfs = gridfsProfile;
+//     else if (collectionName == "media") gridfs = gridfsMedia;
 
-    await gridfs.delete(new mongoose.Types.ObjectId(req.params.id));
-    res.status(204).json({
-      status: "success",
-    });
-  });
+//     await gridfs.delete(new mongoose.Types.ObjectId(req.params.id));
+//     res.status(204).json({
+//       status: "success",
+//     });
+//   });
 
-exports.deleteManyMedia = (collectionName) =>
-  catchAsync(async (req, res, next) => {
-    if (collectionName == "userProfile") gridfs = gridfsProfile;
-    else if (collectionName == "media") gridfs = gridfsMedia;
+// exports.deleteManyMedia = (collectionName) =>
+//   catchAsync(async (req, res, next) => {
+//     if (collectionName == "userProfile") gridfs = gridfsProfile;
+//     else if (collectionName == "media") gridfs = gridfsMedia;
 
-    // gfs.collection(collectionName + '.chunks');
-    console.log(req.body.delete);
-    // gridfs.delete(`ObjectId("${req.body.delete[0]}")`)
-    await gridfs.delete(new mongoose.Types.ObjectId(req.body.delete[0]));
+//     // gfs.collection(collectionName + '.chunks');
+//     console.log(req.body.delete);
+//     // gridfs.delete(`ObjectId("${req.body.delete[0]}")`)
+//     await gridfs.delete(new mongoose.Types.ObjectId(req.body.delete[0]));
 
-    res.status(200).json({
-      status: "success",
-    });
-  });
+//     res.status(200).json({
+//       status: "success",
+//     });
+//   });

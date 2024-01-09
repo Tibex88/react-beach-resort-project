@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/userModel");
 const catchAsync = require("../utils/catchAsync");
 const APIError = require("../utils/apiError");
-const factory = require("../controller/handlerFactory");
+// const factory = require("../controller/handlerFactory");
 const Email = require("./../utils/sendMail");
 
 const signToken = (id) => {
@@ -46,6 +46,7 @@ const createSendToken = (user, statusCode, res) => {
 
 exports.signUp = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
+  console.log("sign up")
 
   const user = await User.findOne({
     email,
@@ -59,10 +60,10 @@ exports.signUp = catchAsync(async (req, res, next) => {
     return next(new APIError(`User cannot be created at the moment`, 400));
   }
   await newUser.save();
-  const token = signToken(newUser._id);
+  // const token = signToken(newUser._id);
   // const url = `${req.protocol}://${req.get('host')}/me`
-  const url = `/me`;
-  await new Email(newUser, url).sendWelcome(password);
+  // const url = `/me`;
+  // await new Email(newUser, url).sendWelcome(password);
   createSendToken(newUser, 200, res);
   res.end();
 });
@@ -96,7 +97,7 @@ exports.logout = catchAsync((req, res) => {
 });
 
 exports.protect = catchAsync(async (req, res, next) => {
-  console.log("first");
+  console.log("protect");
   // 1) Getting token and check of it's there
   let token;
   if (

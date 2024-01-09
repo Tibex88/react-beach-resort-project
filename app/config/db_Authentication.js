@@ -1,4 +1,7 @@
-const dotenv = require("dotenv").config();
+// const dotenv = require("dotenv").config();
+require("dotenv").config({
+  path: "./../config.env"
+});
 
 // const DB_HOST = process.env.DB_HOST;
 // const DB_USER = process.env.DB_USER;

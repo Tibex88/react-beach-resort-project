@@ -8,8 +8,16 @@ const globalErrorHandler = require("./controller/errorController");
 const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
 const mongoSanitize = require("express-mongo-sanitize");
-// const xss = require("xss-clean") //might rremove the html tags that are needed
+const xss = require("xss-clean") // remove the html tags that are needed
 const hpp = require("hpp");
+const limiter = rateLimit({
+  max: 100,
+  windiwMs: 60 * 60 * 10000,
+  message:
+    "Too many requests hae been coming in from this IP, pleasve try again in an hour",
+});
+const methodOverride = require("method-override");
+
 
 app.use(helmet());
 
@@ -19,7 +27,7 @@ app.use(
   })
 );
 
-// app.use(xss())
+app.use(xss())
 app.use(mongoSanitize({ allowDots: true }));
 app.use(
   hpp()
@@ -28,7 +36,6 @@ app.use(
   // ]
 );
 ////////
-const methodOverride = require("method-override");
 app.use(methodOverride("_method"));
 
 //Middlewares
@@ -39,17 +46,14 @@ app.use(
     // credentials: "include",
   })
 );
-app.use(express.static("../Client/public"));
+app.use(express.static("../public"));
+// app.use(express.static("../Client/public")); //  path.join(__dirname, "public")
 
-if (process.env.NODE_ENV == "development") {
+
+if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
-const limiter = rateLimit({
-  max: 100,
-  windiwMs: 60 * 60 * 10000,
-  message:
-    "Too many requests hae been coming in from this IP, pleasve try again in an hour",
-});
+
 app.use("/", limiter);
 
 app.use((req, res, next) => {
@@ -57,19 +61,12 @@ app.use((req, res, next) => {
   next();
 });
 
-// app.use(express.static("../Client/public")); //  path.join(__dirname, "public")
 
 const userRouter = require("./routes/userRoutes");
-const rockRouter = require("./routes/rockRoutes");
-const editRouter = require("./routes/editRoutes");
-const feedbackRouter = require("./routes/feedbackRoutes");
-const statRouter = require("./routes/statsRoutes");
+const roomRouter = require("./routes/roomRoutes");
 
 app.use("/users", userRouter);
-app.use("/rocks", rockRouter);
-app.use("/edits", editRouter);
-app.use("/feedback", feedbackRouter);
-app.use("/statistics", statRouter);
+app.use("/rooms", roomRouter);
 
 app.all("*", (req, res, next) => {
   next(new APIError(`Can't find ${req.originalUrl} in server plus`, 404));
@@ -77,5 +74,4 @@ app.all("*", (req, res, next) => {
 
 app.use(globalErrorHandler);
 
-//Create server
 module.exports = app;

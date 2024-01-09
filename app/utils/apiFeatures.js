@@ -51,35 +51,35 @@ class APIFeatures {
         return this
     }
     populate() {
-        let rockPopulateObj = [{
-                path: "mineral.mineral"
-            },
-            {
-                path: "location.location"
-            },
-            {
-                path: "industry.industry"
-            },
-            {
-                path: "references"
-            },
-            {
-                path: "heldBy"
-            },
-        ]
+        // let rockPopulateObj = [{
+        //         path: "mineral.mineral"
+        //     },
+        //     {
+        //         path: "location.location"
+        //     },
+        //     {
+        //         path: "industry.industry"
+        //     },
+        //     {
+        //         path: "references"
+        //     },
+        //     {
+        //         path: "heldBy"
+        //     },
+        // ]
 
-        if (this.queryString.fields) {
-            const result = this.queryString.fields.split(',');
-            rockPopulateObj = rockPopulateObj.filter((value) => {
-                if (result.includes(`${value.path.split(".")[0]}`)) {
-                    return value
-                }
-            });
-        }
+        // if (this.queryString.fields) {
+        //     const result = this.queryString.fields.split(',');
+        //     rockPopulateObj = rockPopulateObj.filter((value) => {
+        //         if (result.includes(`${value.path.split(".")[0]}`)) {
+        //             return value
+        //         }
+        //     });
+        // }
 
-        this.query = this.query.populate(
-            rockPopulateObj,
-        )
+        // this.query = this.query.populate(
+        //     rockPopulateObj,
+        // )
         return this;
     }
 }
