@@ -18,3 +18,87 @@ undefined - [INFO   ] - The port is listening...at 27000
 2024-01-10T07:17:37.528Z - [WARN   ] - warn
 2024-01-10T07:17:37.529Z - [INFO   ] - info
 2024-01-10T07:17:37.545Z - [INFO   ] - The port is listening...at 27000
+2024-01-10T08:27:50.161Z - [ERROR  ] - error
+2024-01-10T08:27:50.165Z - [WARN   ] - warn
+2024-01-10T08:27:50.166Z - [INFO   ] - info
+2024-01-10T08:27:50.176Z - [INFO   ] - The port is listening...at 27000
+2024-01-10T08:27:50.230Z - [INFO   ] - users.createIndex([object Object], [object Object])
+2024-01-10T08:27:50.234Z - [INFO   ] - rooms.createIndex([object Object], [object Object])
+2024-01-10T08:28:20.948Z - [INFO   ] - users.findOne([object Object], [object Object])
+2024-01-10T08:28:21.012Z - [INFO   ] - users.find([object Object], [object Object])
+2024-01-10T08:29:13.321Z - [ERROR  ] - error
+2024-01-10T08:29:13.325Z - [WARN   ] - warn
+2024-01-10T08:29:13.326Z - [INFO   ] - info
+2024-01-10T08:29:13.335Z - [INFO   ] - The port is listening...at 27000
+2024-01-10T08:29:13.374Z - [INFO   ] - users.createIndex([object Object], [object Object])
+2024-01-10T08:29:13.378Z - [INFO   ] - rooms.createIndex([object Object], [object Object])
+2024-01-10T08:29:24.833Z - [ERROR  ] - error
+2024-01-10T08:29:24.837Z - [WARN   ] - warn
+2024-01-10T08:29:24.838Z - [INFO   ] - info
+2024-01-10T08:29:24.849Z - [INFO   ] - The port is listening...at 27000
+2024-01-10T08:29:24.896Z - [INFO   ] - users.createIndex([object Object], [object Object])
+2024-01-10T08:29:24.900Z - [INFO   ] - rooms.createIndex([object Object], [object Object])
+2024-01-10T08:29:33.401Z - [INFO   ] - users.findOne([object Object], [object Object])
+2024-01-10T08:29:33.431Z - [INFO   ] - users.find([object Object], [object Object])
+2024-01-10T08:29:51.400Z - [INFO   ] - users.findOne([object Object], [object Object])
+2024-01-10T08:29:51.414Z - [INFO   ] - users.find([object Object], [object Object])
+2024-01-10T08:31:06.265Z - [INFO   ] - users.findOne([object Object], [object Object])
+2024-01-10T08:31:22.131Z - [INFO   ] - users.findOne([object Object], [object Object])
+2024-01-10T08:31:22.144Z - [INFO   ] - rooms.updateOne([object Object], [object Object], [object Object])
+2024-01-10T08:32:02.212Z - [ERROR  ] - error
+2024-01-10T08:32:02.214Z - [WARN   ] - warn
+2024-01-10T08:32:02.215Z - [INFO   ] - info
+2024-01-10T08:32:02.221Z - [INFO   ] - The port is listening...at 27000
+2024-01-10T08:32:21.232Z - [ERROR  ] - error
+2024-01-10T08:32:21.236Z - [WARN   ] - warn
+2024-01-10T08:32:21.237Z - [INFO   ] - info
+2024-01-10T08:32:21.248Z - [INFO   ] - The port is listening...at 27000
+2024-01-10T08:32:36.499Z - [ERROR  ] - error
+2024-01-10T08:32:36.504Z - [WARN   ] - warn
+2024-01-10T08:32:36.504Z - [INFO   ] - info
+2024-01-10T08:32:36.513Z - [INFO   ] - The port is listening...at 27000
+2024-01-10T08:32:36.556Z - [INFO   ] - users.createIndex([object Object], [object Object])
+2024-01-10T08:32:36.561Z - [INFO   ] - rooms.createIndex([object Object], [object Object])
+2024-01-10T08:33:02.650Z - [ERROR  ] - error
+2024-01-10T08:33:02.655Z - [WARN   ] - warn
+2024-01-10T08:33:02.656Z - [INFO   ] - info
+2024-01-10T08:33:02.667Z - [INFO   ] - The port is listening...at 27000
+2024-01-10T08:33:11.507Z - [ERROR  ] - error
+2024-01-10T08:33:11.511Z - [WARN   ] - warn
+2024-01-10T08:33:11.512Z - [INFO   ] - info
+2024-01-10T08:33:11.521Z - [INFO   ] - The port is listening...at 27000
+2024-01-10T08:33:11.564Z - [INFO   ] - users.createIndex([{"email":1},{"unique":true,"background":true}])
+2024-01-10T08:33:11.569Z - [INFO   ] - rooms.createIndex([{"name":1},{"unique":true,"background":true}])
+2024-01-10T08:33:28.148Z - [INFO   ] - users.findOne([{"_id":"6597c93e2a32c44518eb0694"},{"projection":{"password":0,"passwordConfirm":0}}])
+2024-01-10T08:33:28.190Z - [INFO   ] - rooms.updateOne([{"_id":"6598078a4ee50c1c6c36d845"},{"$set":{"reservation":{"name":"tibebe","checkIn":"2024-01-05T13:43:33.588Z"}}},{"new":true,"runValidators":true}])
+2024-01-10T08:35:01.359Z - [INFO   ] - users.findOne([{"_id":"6597c93e2a32c44518eb0694"},{"projection":{"password":0,"passwordConfirm":0}}])
+2024-01-10T08:35:01.397Z - [INFO   ] - rooms.insertOne([{"name":"presidential","type":"double","price":400,"size":500,"capacity":2,"pets":true,"breakfast":true,"createdAt":"2024-01-10T08:33:11.493Z","featured":true,"description":"Street art edison bulb gluten-free, tofu try-hard lumbersexual brooklyn tattooed pickled chambray. Actually humblebrag next level, deep v art party wolf tofu direct trade readymade sustainable hell of banjo. Organic authentic subway tile cliche palo santo, street art XOXO dreamcatcher retro sriracha portland air plant kitsch stumptown. Austin small batch squid gastropub. Pabst pug tumblr gochujang offal retro cloud bread bushwick semiotics before they sold out sartorial literally mlkshk. Vaporware hashtag vice, sartorial before they sold out pok pok health goth trust fund cray.","extras":["Plush pillows and breathable bed linens","Soft, oversized bath towels","Full-sized, pH-balanced toiletries","Complimentary refreshments","Adequate safety/security","Internet","Comfortable beds"],"active":true,"available":true,"checkIn":"2024-01-10T08:33:11.493Z","checkOut":"2024-01-10T08:33:11.493Z","_id":"659e56b5c2ad3740f4df7c14","images":[{"url":"./images/room-8.jpeg","caption":null,"_id":"659e56b5c2ad3740f4df7c15"},{"url":"./images/details-2.jpeg","caption":null,"_id":"659e56b5c2ad3740f4df7c16"},{"url":"./images/details-3.jpeg","caption":null,"_id":"659e56b5c2ad3740f4df7c17"},{"url":"./images/details-4.jpeg","caption":null,"_id":"659e56b5c2ad3740f4df7c18"}],"__v":0},{"session":null}])
+2024-01-10T08:35:58.932Z - [ERROR  ] - error
+2024-01-10T08:35:58.937Z - [WARN   ] - warn
+2024-01-10T08:35:58.938Z - [INFO   ] - info
+2024-01-10T08:35:58.947Z - [INFO   ] - The port is listening...at 27000
+2024-01-10T08:35:59.003Z - [INFO   ] - users.createIndex([{"email":1},{"unique":true,"background":true}])
+2024-01-10T08:35:59.004Z - [ERROR  ] - users.createIndex([{"email":1},{"unique":true,"background":true}])
+2024-01-10T08:35:59.008Z - [INFO   ] - rooms.createIndex([{"name":1},{"unique":true,"background":true}])
+2024-01-10T08:35:59.010Z - [ERROR  ] - rooms.createIndex([{"name":1},{"unique":true,"background":true}])
+2024-01-10T08:36:11.451Z - [INFO   ] - users.findOne([{"_id":"6597c93e2a32c44518eb0694"},{"projection":{"password":0,"passwordConfirm":0}}])
+2024-01-10T08:36:11.453Z - [ERROR  ] - users.findOne([{"_id":"6597c93e2a32c44518eb0694"},{"projection":{"password":0,"passwordConfirm":0}}])
+2024-01-10T08:36:11.504Z - [INFO   ] - rooms.insertOne([{"name":"presidential","type":"double","price":400,"size":500,"capacity":2,"pets":true,"breakfast":true,"createdAt":"2024-01-10T08:35:58.920Z","featured":true,"description":"Street art edison bulb gluten-free, tofu try-hard lumbersexual brooklyn tattooed pickled chambray. Actually humblebrag next level, deep v art party wolf tofu direct trade readymade sustainable hell of banjo. Organic authentic subway tile cliche palo santo, street art XOXO dreamcatcher retro sriracha portland air plant kitsch stumptown. Austin small batch squid gastropub. Pabst pug tumblr gochujang offal retro cloud bread bushwick semiotics before they sold out sartorial literally mlkshk. Vaporware hashtag vice, sartorial before they sold out pok pok health goth trust fund cray.","extras":["Plush pillows and breathable bed linens","Soft, oversized bath towels","Full-sized, pH-balanced toiletries","Complimentary refreshments","Adequate safety/security","Internet","Comfortable beds"],"active":true,"available":true,"checkIn":"2024-01-10T08:35:58.920Z","checkOut":"2024-01-10T08:35:58.920Z","_id":"659e56fbfbd8ad4880568fec","images":[{"url":"./images/room-8.jpeg","caption":null,"_id":"659e56fbfbd8ad4880568fed"},{"url":"./images/details-2.jpeg","caption":null,"_id":"659e56fbfbd8ad4880568fee"},{"url":"./images/details-3.jpeg","caption":null,"_id":"659e56fbfbd8ad4880568fef"},{"url":"./images/details-4.jpeg","caption":null,"_id":"659e56fbfbd8ad4880568ff0"}],"__v":0},{"session":null}])
+2024-01-10T08:36:11.508Z - [ERROR  ] - rooms.insertOne([{"name":"presidential","type":"double","price":400,"size":500,"capacity":2,"pets":true,"breakfast":true,"createdAt":"2024-01-10T08:35:58.920Z","featured":true,"description":"Street art edison bulb gluten-free, tofu try-hard lumbersexual brooklyn tattooed pickled chambray. Actually humblebrag next level, deep v art party wolf tofu direct trade readymade sustainable hell of banjo. Organic authentic subway tile cliche palo santo, street art XOXO dreamcatcher retro sriracha portland air plant kitsch stumptown. Austin small batch squid gastropub. Pabst pug tumblr gochujang offal retro cloud bread bushwick semiotics before they sold out sartorial literally mlkshk. Vaporware hashtag vice, sartorial before they sold out pok pok health goth trust fund cray.","extras":["Plush pillows and breathable bed linens","Soft, oversized bath towels","Full-sized, pH-balanced toiletries","Complimentary refreshments","Adequate safety/security","Internet","Comfortable beds"],"active":true,"available":true,"checkIn":"2024-01-10T08:35:58.920Z","checkOut":"2024-01-10T08:35:58.920Z","_id":"659e56fbfbd8ad4880568fec","images":[{"url":"./images/room-8.jpeg","caption":null,"_id":"659e56fbfbd8ad4880568fed"},{"url":"./images/details-2.jpeg","caption":null,"_id":"659e56fbfbd8ad4880568fee"},{"url":"./images/details-3.jpeg","caption":null,"_id":"659e56fbfbd8ad4880568fef"},{"url":"./images/details-4.jpeg","caption":null,"_id":"659e56fbfbd8ad4880568ff0"}],"__v":0},{"session":null}])
+2024-01-10T08:38:05.132Z - [INFO   ] - users.findOne([{"email":"tibesolomon7@gmail.com"},{"projection":{"passwordConfirm":0}}])
+2024-01-10T08:38:05.134Z - [ERROR  ] - users.findOne([{"email":"tibesolomon7@gmail.com"},{"projection":{"passwordConfirm":0}}])
+2024-01-10T08:38:58.614Z - [ERROR  ] - error
+2024-01-10T08:38:58.618Z - [WARN   ] - warn
+2024-01-10T08:38:58.619Z - [INFO   ] - info
+2024-01-10T08:38:58.629Z - [INFO   ] - The port is listening...at 27000
+2024-01-10T08:38:58.682Z - [INFO   ] - users.createIndex([{"email":1},{"unique":true,"background":true}])
+2024-01-10T08:38:58.687Z - [INFO   ] - rooms.createIndex([{"name":1},{"unique":true,"background":true}])
+2024-01-10T08:39:02.666Z - [INFO   ] - users.findOne([{"email":"tibesolomon7@gmail.com"},{"projection":{"passwordConfirm":0}}])
+2024-01-10T08:39:10.434Z - [INFO   ] - users.findOne([{"_id":"6597c93e2a32c44518eb0694"},{"projection":{"password":0,"passwordConfirm":0}}])
+2024-01-10T08:39:10.474Z - [INFO   ] - rooms.insertOne([{"name":"presidential","type":"double","price":400,"size":500,"capacity":2,"pets":true,"breakfast":true,"createdAt":"2024-01-10T08:38:58.598Z","featured":true,"description":"Street art edison bulb gluten-free, tofu try-hard lumbersexual brooklyn tattooed pickled chambray. Actually humblebrag next level, deep v art party wolf tofu direct trade readymade sustainable hell of banjo. Organic authentic subway tile cliche palo santo, street art XOXO dreamcatcher retro sriracha portland air plant kitsch stumptown. Austin small batch squid gastropub. Pabst pug tumblr gochujang offal retro cloud bread bushwick semiotics before they sold out sartorial literally mlkshk. Vaporware hashtag vice, sartorial before they sold out pok pok health goth trust fund cray.","extras":["Plush pillows and breathable bed linens","Soft, oversized bath towels","Full-sized, pH-balanced toiletries","Complimentary refreshments","Adequate safety/security","Internet","Comfortable beds"],"active":true,"available":true,"checkIn":"2024-01-10T08:38:58.599Z","checkOut":"2024-01-10T08:38:58.599Z","_id":"659e57aeb67f4649403524e7","images":[{"url":"./images/room-8.jpeg","caption":null,"_id":"659e57aeb67f4649403524e8"},{"url":"./images/details-2.jpeg","caption":null,"_id":"659e57aeb67f4649403524e9"},{"url":"./images/details-3.jpeg","caption":null,"_id":"659e57aeb67f4649403524ea"},{"url":"./images/details-4.jpeg","caption":null,"_id":"659e57aeb67f4649403524eb"}],"__v":0},{"session":null}])
+2024-01-10T08:39:52.945Z - [ERROR  ] - error
+2024-01-10T08:39:52.950Z - [WARN   ] - warn
+2024-01-10T08:39:52.951Z - [INFO   ] - info
+2024-01-10T08:39:52.963Z - [INFO   ] - The port is listening...at 27000
+2024-01-10T08:39:53.031Z - [INFO   ] - users.createIndex([{"email":1},{"unique":true,"background":true}])
+2024-01-10T08:39:53.038Z - [INFO   ] - rooms.createIndex([{"name":1},{"unique":true,"background":true}])

@@ -4,6 +4,8 @@ require("dotenv").config({
   path: "./config.env"
 });
 
+const logger = require("./../utils/logger")
+
 /* get database authentication keys */
 const {
   dbAuth
@@ -16,7 +18,16 @@ mongoose
     useFindAndModify: false,
     useUnifiedTopology: true, //To use the new Server Discover and Monitoring engine
   })
-// mongoose.set('strict', false)
+
+mongoose.set('debug', 
+function(collectionName, methodName, ...methodArgs) {
+  try{
+    logger.info(`${collectionName}.${methodName}(${JSON.stringify(methodArgs)})`)
+  }
+  catch(error){
+    // logger.error(`${collectionName}.${methodName}(${JSON.stringify(methodArgs)})`)
+  }
+})
 const dbConn = mongoose.connection
 
 dbConn.on('error', () => {

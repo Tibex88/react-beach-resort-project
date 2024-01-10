@@ -97,7 +97,7 @@ exports.logout = catchAsync((req, res) => {
 });
 
 exports.protect = catchAsync(async (req, res, next) => {
-  console.log("protect");
+  // console.log("protect");
   // 1) Getting token and check of it's there
   let token;
   if (
@@ -112,7 +112,7 @@ exports.protect = catchAsync(async (req, res, next) => {
       new APIError("You are not logged in! Please log in to get access.", 401)
     );
   }
-  console.log(token);
+  // console.log(token);
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
   const currentUser = await User.findById(decoded.id);
