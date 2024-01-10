@@ -1,0 +1,20 @@
+{"level":"error","message":"error"}
+{"level":"warn","message":"warn"}
+{"level":"info","message":"info"}
+{"level":"info","message":"The port is listening...at 27000"}
+undefined - [ERROR  ] - error
+undefined - [WARN   ] - warn
+undefined - [INFO   ] - info
+undefined - [INFO   ] - The port is listening...at 27000
+undefined - [ERROR  ] - error
+undefined - [WARN   ] - warn
+undefined - [INFO   ] - info
+undefined - [INFO   ] - The port is listening...at 27000
+2024-01-10T07:17:24.815Z - [ERROR  ] - error
+2024-01-10T07:17:24.819Z - [WARN   ] - warn
+2024-01-10T07:17:24.819Z - [INFO   ] - info
+2024-01-10T07:17:24.826Z - [INFO   ] - The port is listening...at 27000
+2024-01-10T07:17:37.519Z - [ERROR  ] - error
+2024-01-10T07:17:37.528Z - [WARN   ] - warn
+2024-01-10T07:17:37.529Z - [INFO   ] - info
+2024-01-10T07:17:37.545Z - [INFO   ] - The port is listening...at 27000
