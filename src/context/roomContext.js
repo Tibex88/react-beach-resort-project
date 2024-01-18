@@ -9,12 +9,12 @@ import axios from "axios";
 const RoomContext = React.createContext();
 
 export default class RoomProvider extends Component {
+  
   state = {
     rooms: [],
     sortedRooms: [],
     featuredRooms: [],
     loading: true,
-    //
     type: "all",
     capacity: 1,
     price: 0,
@@ -25,16 +25,14 @@ export default class RoomProvider extends Component {
     breakfast: false,
     pets: false
   };
-
-  getData = async () => {
+  getRooms = async () => {
     try {
   //     let response = await Client.getEntries({
     // content_type: "beachResortRoom"
   // });
          let response = await axios({
           method: "get",
-          url:
-          "http://localhost:27000/rooms",
+          url:"http://localhost:27000/rooms",
             // `/?${search}&${filter}&page=${page}&limit=16&fields=title,shortDescription,media.thumbnail`,
           headers: {
             Authorization:'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1OTdjOTNlMmEzMmM0NDUxOGViMDY5NCIsImlhdCI6MTcwNDQ2NDE5NywiZXhwIjoxNzEyMjQwMTk3fQ.aGWaNcSHFaqI7kfcCteMurEiz1oa379ub45KCe0J7TM',
@@ -42,11 +40,8 @@ export default class RoomProvider extends Component {
       })
       // console.log({response:response.data.data.data})
       let rooms = this.formatData(response.data.data.data);
-      // console.log({rooms})
 
-      // let featuredRooms = rooms.filter(room => room.featured === true);
       let featuredRooms = [...rooms];
-      //
       let maxPrice = Math.max(...rooms.map(item => item.price));
       let maxSize = Math.max(...rooms.map(item => item.size));
       this.setState({
@@ -54,7 +49,6 @@ export default class RoomProvider extends Component {
         featuredRooms,
         sortedRooms: rooms,
         loading: false,
-        //
         price: maxPrice,
         maxPrice,
         maxSize
@@ -64,11 +58,9 @@ export default class RoomProvider extends Component {
       console.log(error);
     }
   };
-
   async componentDidMount() {
-    await this.getData();
+    await this.getRooms();
   }
-
   formatData(items) {
     let tempItems = items.map(item => {
       let id = item._id;
@@ -141,14 +133,24 @@ export default class RoomProvider extends Component {
       sortedRooms: tempRooms
     });
   };
+  backup = () => {
+
+  const link = document.createElement('a');
+  link.href = "http://localhost:27000/rooms/backup";
+  document.body.appendChild(link);
+  link.click(); 
+  link.remove()
+  }
 
   render() {
     return (
       <RoomContext.Provider
         value={{
           ...this.state,
+          getRooms: this.getRooms,
           getRoom: this.getRoom,
-          handleChange: this.handleChange
+          handleChange: this.handleChange,
+          backup:this.backup
         }}
       >
         {this.props.children}

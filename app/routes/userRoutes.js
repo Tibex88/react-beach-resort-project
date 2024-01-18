@@ -24,6 +24,9 @@ const {
   filterUserUpdateFields,
   getProfile,
 } = require("./../controller/userController");
+
+const {zip} = require("./../utils/zip")
+
 // const rockController = require("./../Controller/rockController"); //do not comment or remove
 const { validationRules, checkId } = require("../lib/validation");
 // const {
@@ -45,17 +48,22 @@ router.param("filename", checkId);
 // router.post("/signup", function(req, res, next) {
 //     console.log("test")
 //     });
+
+router
+    .route("/backup")
+    .get(zip)
   
-router.get("/", protect, restrictTo("manager"), getAllUsers);
-router.post("/signup",validationRules[2], signUp);
+router.get("/", protect, getAllUsers);
 router.get("/me", protect, getMe, getUser);
-router.post("/login", validationRules[3], login);
 router.get("/logout", logout);
 router.get("/myEdits", protect);//getMyEdits
 
+router.post("/signup",validationRules[2], signUp);
+router.post("/login", validationRules[3], login);
 router.post("/forgotPassword", validationRules[4], forgotPassword);
+router.post("/resetPassword/:token", resetPassword);
+
 router.patch("/updatePassword", protect, updatePassword);
-router.patch("/resetPassword/:token", resetPassword);
 
 // router.get(
 //   "/image/:filename",
@@ -98,16 +106,15 @@ router.patch("/resetPassword/:token", resetPassword);
 //   )
 //   .delete(protect, deleteMe); // deactivate user
 
-  // router
-//   .route("/:id")
+router
+  .route("/:id")
 //   .get(protect, restrictTo("manager", "reception", "user"), getUser) //getUser
 //   .post() //
-//   .patch(
-//     protect,
-//     restrictTo("manager"),
-//     // filterUserUpdateFields("role"),
-//     // toggleUserRole
-//   ) //toggleUserRole
+  .patch(
+    protect,
+    restrictTo("manager"),
+    toggleUserRole
+  ) //toggleUserRole
 //   .delete(protect, restrictTo("manager"), deleteUser); //deleteUser
 
 module.exports = router;

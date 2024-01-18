@@ -4,7 +4,7 @@ const APIError = require("../utils/apiError");
 const catchAsync = require("../utils/catchAsync");
 // const transaction = require("../utils/transaction");
 const APIFeatures = require("../utils/apiFeatures");
-const dbConn = require("../config/db_Connection")
+const dbConn = require("../config/db_Connection");
 // const dbAuth = require("../config/db_Authentication");
 require("events").EventEmitter.prototype._maxListeners = 70;
 require("events").defaultMaxListeners = 70;
@@ -88,6 +88,8 @@ exports.getAll = (Model) =>
 
 exports.updateOne = (Model) =>
   catchAsync(async (req, res, next) => {
+
+    console.log(req.params)
     let doc = await Model.updateOne(
       {
         _id: req.params.id,

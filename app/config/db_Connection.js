@@ -34,6 +34,6 @@ dbConn.on('error', () => {
   console.error.bind(console, 'connection error')
 })
 dbConn.once('open', () => {
-  console.log("DBconnection succcessful")
+  logger.info("DBconnection succcessful")
 })
 module.exports = dbConn;

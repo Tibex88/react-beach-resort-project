@@ -8,7 +8,7 @@ const DashBoard = () => {
     <div className=''>
     
     {/* <Dashboard /> */}
-    <DashboardDefault />
+    {/* <DashboardDefault /> */}
     <p>kdklsnflk</p>
     </div>
     </>

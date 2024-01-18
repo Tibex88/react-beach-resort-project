@@ -3,15 +3,18 @@ import { Component, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { UserContext } from "../context/userContext";
 
+import Loading from "./Loading";
 
+import convertDate from '../utils/date';
+
+import { MdBackup } from "react-icons/md";
+import { FaArrowCircleUp } from "react-icons/fa";
+import { FaArrowCircleDown } from "react-icons/fa";
+import { FaLock } from "react-icons/fa";
+import { FaLockOpen } from "react-icons/fa";
+import { IoMdRefresh } from "react-icons/io";
 // material-ui
-import { Box, Grid, Link, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
-
-// third-party
-// import NumberFormat from 'react-number-format';
-
-// project import
-// import Dot from 'components/@extended/Dot';
+import { Box, Grid, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 
 
 const headCells = [
@@ -27,31 +30,43 @@ const headCells = [
     disablePadding: false,
     label: 'Email.'
   },
+  // {
+  //   id: 'phoneNumber',
+  //   align: 'left',
+  //   disablePadding: true,
+  //   label: 'Phone Number'
+  // },
   {
-    id: 'phoneNumber',
-    align: 'left',
-    disablePadding: true,
-    label: 'Phone Number'
-  },
-  {
-    id: 'fat',
-    align: 'right',
-    disablePadding: false,
-    label: 'Total Order'
-  },
-  {
-    id: 'carbs',
+    id: 'role',
     align: 'left',
     disablePadding: false,
-
-    label: 'Status'
+    label: 'Role'
   },
   {
-    id: 'protein',
-    align: 'right',
+    id: 'created',
+    align: 'left',
     disablePadding: false,
-    label: 'Total Amount'
+    label: 'Created'
+  },
+  {
+    id: 'actions',
+    align: 'left',
+    disablePadding: false,
+    label: 'Actions'
   }
+  // {
+  //   id: 'carbs',
+  //   align: 'left',
+  //   disablePadding: false,
+
+  //   label: 'Status'
+  // },
+  // {
+  //   id: 'protein',
+  //   align: 'left',
+  //   disablePadding: false,
+  //   label: 'Total Amount'
+  // }
 ];
 
 // ==============================|| ORDER TABLE - HEADER ||============================== //
@@ -79,7 +94,6 @@ OrderTableHead.propTypes = {
   order: PropTypes.string,
   orderBy: PropTypes.string
 };
-
 
 const OrderStatus = ({ status }) => {
   let color;
@@ -116,7 +130,7 @@ OrderStatus.propTypes = {
 };
 
 
-export default class OrderTable extends Component {
+export default class UsersTable extends Component {
   
   static contextType = UserContext;
   
@@ -126,15 +140,29 @@ export default class OrderTable extends Component {
   isSelected = (trackingNo) => this.selected.indexOf(trackingNo) !== -1;
 
 render(){
-  let { users } = this.context; 
+  let { loading, users, backup, toggleRole, getUsers } = this.context;
+  // await getUsers()
+  // console.log({users})
   return (
     <Grid item xs={12} md={7} lg={8}>
-    <Grid container alignItems="center" justifyContent="space-between">
+    
+    <Grid container alignItems="center"  flexDirection="row" gap={5}>
       <Grid item>
         <Typography variant="h5">Users ({users.length})</Typography>
       </Grid>
-      <Grid item />
+      <Grid  />
+      <Grid item>
+        <Typography variant="h5">
+          <MdBackup onClick={()=>{backup()}}/> 
+        </Typography>
+        </Grid>
+      <Grid item>
+        <Typography variant="h5">
+          <IoMdRefresh onClick={()=>{getUsers()}}/> 
+        </Typography>
+      </Grid>
     </Grid>
+
     <Box>
       <TableContainer
         sx={{
@@ -157,10 +185,11 @@ render(){
             }
           }}
         >
+
           <OrderTableHead order={this.order} orderBy={this.orderBy} />
+          
           <TableBody>
             {users.map((row, index) => {
-              const isItemSelected = this.isSelected(row.fullName);
               const labelId = `enhanced-table-checkbox-${index}`;
 
               return (
@@ -168,41 +197,72 @@ render(){
                   hover
                   role="checkbox"
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                  aria-checked={isItemSelected}
                   tabIndex={-1}
-                  key={row.id}
-                  selected={isItemSelected}
+                  key={row._id}
                 >
                   <TableCell component="th" id={labelId} scope="row" align="left">
-                    <Link color="secondary" component={RouterLink} to="">
+                    {/* <Link color="secondary" component={RouterLink} to=""> */}
                       {row.fullName}
-                    </Link>
+                    {/* </Link> */}
                   </TableCell>
+                  
                   <TableCell align="left">{row.email}</TableCell>
-                  <TableCell align="right">{row.phoneNumber}</TableCell>
-                  <TableCell align="left">
-                    {row.role}
-                    {/* <OrderStatus status={row.carbs} /> */}
+                  
+                  {/* <TableCell align="left">{row.phoneNumber}</TableCell> */}
+                  
+                  <TableCell align="left">{row.role}</TableCell>
+                                    
+                  <TableCell align="left">{convertDate(row.createdAt)}</TableCell>
+                  
+                  {/* <TableCell align="left">{row.active}</TableCell> */}
+
+                  <TableCell align="center">
+                  <Grid container alignItems="center" width={"full"} flexDirection="row" gap={5}>
+
+                  {
+                    row.role === "user" &&
+                    <Grid item>
+                      <FaArrowCircleUp onClick={()=>{ toggleRole(row._id,"receptionist" ) }} 
+                        />
+                    </Grid>
+                  }
+
+                  {
+                    row.role === "receptionist" &&
+
+                    <Grid item>
+                      <FaArrowCircleDown onClick={()=>{ toggleRole(row._id,"user" ) }} />
+                    </Grid>
+                  }
+
+                  
+                  {
+                    !row.active  &&
+                    <Grid item>
+                      <FaLock />
+                    </Grid>
+                  }
+                  {
+                    row.active &&
+                    <Grid item>
+                      <FaLockOpen />
+                    </Grid>
+                  }
+
+                  </Grid>
+
                   </TableCell>
-                  <TableCell align="right">
-                    {row.phoneNumber}
-                    {/* <NumberFormat value={row.protein} displayType="text" thousandSeparator prefix="$" /> */}
-                  </TableCell>
-                  <TableCell align="right">
-                    {row.active}
-                    {/* <NumberFormat value={row.protein} displayType="text" thousandSeparator prefix="$" /> */}
-                  </TableCell>
-                  <TableCell align="right">
-                    {row.createdAt}
-                    {/* <NumberFormat value={row.protein} displayType="text" thousandSeparator prefix="$" /> */}
-                  </TableCell>
+                  
+
                 </TableRow>
               );
             })}
           </TableBody>
+
         </Table>
       </TableContainer>
     </Box>
+
     </Grid>
-  );}
+  )}
 }

@@ -170,7 +170,7 @@ exports.protect = catchAsync(async (req, res, next) => {
 
 exports.restrictTo = (...roles) => {
   return (req, res, next) => {
-    console.log("role" + req.user.role);
+    console.log("role: " + req.user.role);
     // roles ['admin', 'lead-guide'].role='user'
     if (!roles.includes(req.user.role)) {
       return next(
@@ -202,7 +202,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   // 3) Send it to user's email
   const resetURL = `${
     req.protocol
-  }://${"localhost:8080"}/reset-password/${resetToken}`;
+  }://${"localhost:3000"}/resetpassword/${resetToken}`;
 
   // const message = `Forgot your password? Submit a PATCH request with your new password and passwordConfirm to: ${resetURL}.\nIf you didn't forget your password, please ignore this email!`;
 

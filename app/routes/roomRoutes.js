@@ -9,6 +9,8 @@ const {
     deleteRoom
 } = require("./../controller/roomController");
 
+const {zip} = require("./../utils/zip")
+
 const {
     restrictTo,
     protect,
@@ -18,10 +20,17 @@ const { validationRules, checkId } = require("../lib/validation");
 
 const router = express.Router();
 
+// const Room = require("../models/roomModel.js")
+// const User = require("../models/userModel.js")
+
 router
     .route("/")
     .get(protect,restrictTo("manager", "receptionist","user"),getAllRooms)
     .post(protect,restrictTo("manager", "receptionist"), createRoom)   
+
+router
+    .route("/backup")
+    .get(zip)
 
 router
   .route("/:id")

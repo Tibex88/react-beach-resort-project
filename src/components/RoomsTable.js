@@ -1,19 +1,26 @@
 import PropTypes from 'prop-types';
+
 import { Component, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+
 import { RoomContext } from "../context/roomContext";
 
+import { FaLock, FaLockOpen, FaPlus } from "react-icons/fa";
+import { MdBackup, MdDelete } from "react-icons/md";
+import { FaEdit } from "react-icons/fa";
+import { IoMdRefresh } from "react-icons/io";
+import { IoMdEye } from "react-icons/io";
+import { IoMdEyeOff } from "react-icons/io";
 
 // material-ui
 import { Box, Grid, Link, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
-
+import DialogSelect from './DialogSelect';
+import DialogReservation from './DialogReservation';
 // third-party
 // import NumberFormat from 'react-number-format';
 
 // project import
 // import Dot from 'components/@extended/Dot';
-
-
 
 const headCells = [
   {
@@ -69,19 +76,25 @@ const headCells = [
     align: 'left',
     disablePadding: false,
     label: 'Active'
+  },
+  {
+    id: 'actions',
+    align: 'left',
+    disablePadding: false,
+    label: 'Actions'
   }
 ];
 
 // ==============================|| ORDER TABLE - HEADER ||============================== //
 
-function OrderTableHead({ order, orderBy }) {
+function CustomTableHead({ order, orderBy }) {
   return (
     <TableHead>
       <TableRow>
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
-            align={headCell.align}
+            align={"left"}
             padding={headCell.disablePadding ? 'none' : 'normal'}
             sortDirection={orderBy === headCell.id ? order : false}
           >
@@ -93,51 +106,12 @@ function OrderTableHead({ order, orderBy }) {
   );
 }
 
-// OrderTableHead.propTypes = {
-//   order: PropTypes.string,
-//   orderBy: PropTypes.string
-// };
-
-// ==============================|| ORDER TABLE - STATUS ||============================== //
-
-const OrderStatus = ({ status }) => {
-  let color;
-  let title;
-
-  switch (status) {
-    case 0:
-      color = 'warning';
-      title = 'Pending';
-      break;
-    case 1:
-      color = 'success';
-      title = 'Approved';
-      break;
-    case 2:
-      color = 'error';
-      title = 'Rejected';
-      break;
-    default:
-      color = 'primary';
-      title = 'None';
-  }
-
-  return (
-    <Stack direction="row" spacing={1} alignItems="center">
-      {/* <Dot color={color} /> */}
-      <Typography>{title}</Typography>
-    </Stack>
-  );
-};
-
-// OrderStatus.propTypes = {
-//   status: PropTypes.number
-// };
 
 
 export default class RoomsTable extends Component {
   
   static contextType = RoomContext;
+
 
   order = 'asc';
   orderBy ='trackingNo';
@@ -146,16 +120,39 @@ export default class RoomsTable extends Component {
   isSelected = (trackingNo) => this.selected.indexOf(trackingNo) !== -1;
 
   render(){
-    let { rooms } = this.context;
+    let { rooms, backup, getRooms } = this.context;
     return (
-
+    <>
       <Grid item xs={12} md={7} lg={8}>
-      <Grid container alignItems="center" justifyContent="space-between">
+      
+      <Grid container alignItems="center" flexDirection="row" gap={5}>
         <Grid item>
           <Typography variant="h5">Rooms ({rooms.length})</Typography>
         </Grid>
-        <Grid item />
+
+        <Grid item>
+        <Typography variant="h5">
+          <MdBackup onClick={()=>{backup()}}/> 
+        </Typography>
+        </Grid>
+
+        <Grid item>
+        <Typography variant="h5">
+          <IoMdRefresh onClick={()=>{getRooms()}}/> 
+        </Typography>
       </Grid>
+
+
+        <Grid item>
+        <Typography variant="h5">
+          <DialogSelect /> 
+        </Typography>
+      </Grid>
+
+
+        <Grid  />
+      </Grid>
+      
       <Box>
         <TableContainer
           sx={{
@@ -178,7 +175,7 @@ export default class RoomsTable extends Component {
               }
             }}
           >
-            <OrderTableHead order={this.order} orderBy={this.orderBy} />
+            <CustomTableHead order={this.order} orderBy={this.orderBy} />
             <TableBody>
               {rooms.map((row, index) => {
                 const isItemSelected = true;
@@ -191,30 +188,56 @@ export default class RoomsTable extends Component {
                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                     aria-checked={isItemSelected}
                     tabIndex={-1}
-                    key={row._id}
-                    selected={isItemSelected}
-                  >
-                    <TableCell component="th" id={labelId} scope="row" align="left">
-                        {row.name}
-                    </TableCell>
+                    key={row._id}>
+
+                    <TableCell component="th" id={labelId} scope="row" align="left">{row.name}</TableCell>
+                    
                     <TableCell align="left">{row.type}</TableCell>
+                    
                     <TableCell align="left">{row.price}</TableCell>
-                    <TableCell align="left">
-                      {row.size}
-                      {/* <OrderStatus status={row.carbs} /> */}
-                    </TableCell>
-                    <TableCell align="left">
-                      {row.capacity}
-                      {/* <NumberFormat value={row.protein} displayType="text" thousandSeparator prefix="$" /> */}
-                    </TableCell>
+                    
+                    <TableCell align="left">{row.size}</TableCell>
+                    
+                    <TableCell align="left">{row.capacity}</TableCell>
+                    
                     <TableCell align="left">
                       {/* {row.reservation} */}
+                      {/* <IoMdEye /> */}
+                      <DialogReservation />
+                      {/* <IoMdEyeOff /> */}
                     </TableCell>
+                    
+                    <TableCell align="left">{row.available}</TableCell>
+                    
                     <TableCell align="left">
-                      {row.available}
-                    </TableCell>
+                      {/* {row.active} */}
+                      {
+                    !row.active  &&
+                    <Grid item>
+                      <FaLock />
+                    </Grid>
+                  }
+                  {
+                    row.active &&
+                    <Grid item>
+                      <FaLockOpen />
+                    </Grid>
+                  }
+                      </TableCell>
+                    
                     <TableCell align="left">
-                      {row.active}
+                      <Grid container alignItems="center" flexDirection="row" gap={5} >
+                        
+                        {/* <Grid item>
+                        <FaEdit />
+                        </Grid> */}
+
+                        <Grid item>
+                        <MdDelete />
+                        </Grid>
+
+                      </Grid>    
+                    
                     </TableCell>
                   </TableRow>
                 );
@@ -223,6 +246,8 @@ export default class RoomsTable extends Component {
           </Table>
         </TableContainer>
       </Box>
+
       </Grid>
-    );}
+    </>
+    )}
 }

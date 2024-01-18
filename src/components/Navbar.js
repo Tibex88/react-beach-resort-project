@@ -10,6 +10,7 @@ import { AppBar, Button, Toolbar, Typography } from "@mui/material";
 
 import { withUserConsumer } from "../context/userContext";
 import SignIn from "../pages/SignIn";
+import { NavLink } from "react-router-dom/cjs/react-router-dom";
 
 
 function Navbar ({ context }) {
@@ -19,7 +20,7 @@ function Navbar ({ context }) {
   const handleToggle = () => {
     this.setState({ isOpen: !state.isOpen });
   };
-  const {firstName, lastName, role,auth,logout} = context
+  const {firstName, lastName, me,auth,logout, isLoggedIn} = context
 
     return (
       // <ThemeProvider theme={defaultTheme}>
@@ -36,53 +37,48 @@ function Navbar ({ context }) {
         <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
           Beach Resort
         </Typography>
-        <nav>
-          <a
-            // variant="button"
-            // color="text.primary"
-            href="/"
-            // sx={{ my: 1, mx: 1.5 }}
+        <nav style={{display:"flex", gap:"5"}}>
+          <NavLink
+            to="/"
           >
             Home
-          </a>
-          <a
+          </NavLink>
+          <NavLink
             // variant="button"
             // color="text.primary"
-            href="/rooms"
+            to="/rooms"
             // sx={{ my: 1, mx: 1.5 }}
           >
-            Rooms
-          </a>
+            Search
+          </NavLink>
           {
-            role === "manager"?
+          (isLoggedIn && me.role !== "user")
+          &&
+           me.role !== "user" ?
             <>
-            <a href="/dashboard/rooms">
-            Dash-Rooms
-          </a>
-          <a href="/dashboard/users">
-            Dash-users
-          </a>
+          <NavLink to="/dashboard/rooms">
+            Rooms
+          </NavLink>
+          <NavLink to="/dashboard/users">
+            Users
+          </NavLink>
+          <NavLink
+            to="/profile"
+          >
+            Profile
+          </NavLink>
             </>
             :
             <></>
           }
 
-          <a
-            // variant="button"
-            // color="text.primary"
-            href="/profile"
-            // sx={{ my: 1, mx: 1.5 }}
-          >
-            Profile
-          </a>
+         
         </nav>
         <Button 
-        // href={auth ? "/signin":"#"} 
-        onClick={()=>{
-          !auth && logout()
-         }}
+
+        onClick={async ()=>{ isLoggedIn && await logout() }}
         variant="outlined" sx={{ my: 1, mx: 1.5 }}>
-                  {auth?"Logout":"Signin"}
+            { isLoggedIn ? "Logout" : "Signin" }
         </Button>
       </Toolbar>
     </AppBar>
@@ -91,4 +87,3 @@ function Navbar ({ context }) {
   }
 
 export default withUserConsumer(Navbar); 
-  

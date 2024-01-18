@@ -5,17 +5,20 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { RoomProvider } from "./context/roomContext";
 import { UserProvider } from "./context/userContext";
+import { APIErrorProvider } from "./context/errorContext"
 // import { NavigationProvider } from "./context/navigationContext";
 import { BrowserRouter } from "react-router-dom";
 
 ReactDOM.render(
 <BrowserRouter>
   {/* <NavigationProvider> */}
-  <RoomProvider>
+<APIErrorProvider>
   <UserProvider>
-      <App />
+    <RoomProvider>
+        <App />
+    </RoomProvider>
   </UserProvider>
-  </RoomProvider>
+</APIErrorProvider>  
   {/* </NavigationProvider> */}
 </BrowserRouter>
   ,

@@ -93,31 +93,22 @@ const room = new mongoose.Schema(
       default: true,
     },
     reservation:{
-          name:{
-              type:String,
-          },
-          checkIn:{
-              type:Date,
-              // default:Date.now()
-          },
-          checkOut:{
-              type:Date,
-              // default:Date.now()
-          },
-  },
-    available:{
-    type:Boolean,
-    default:true,
-},
-  checkIn:{
-      type:Date,
-      default:Date.now()
-  },
-  checkOut:{
-      type:Date,
-      default:Date.now()
-  },
-
+      isReserved:{
+        type:Boolean,
+        default:true,
+      },
+      name:{
+          type:String,
+      },
+      checkIn:{
+          type:Date,
+          // default:Date.now()
+      },
+      checkOut:{
+          type:Date,
+          // default:Date.now()
+      },
+    },
   },
   {
     toJSON: {
