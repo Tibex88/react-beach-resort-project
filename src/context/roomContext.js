@@ -2,6 +2,10 @@ import React, { Component } from "react";
 // import items from "./data";
 import Client from "../Contentful";
 import axios from "axios";
+import { APIErrorContext } from "../context/errorContext";
+import { UserContext } from "./userContext";
+// import { useContext } from "react";
+// const {auth} = useContext(UserContext)
 
 // require("dotenv").config();
 
@@ -9,6 +13,7 @@ import axios from "axios";
 const RoomContext = React.createContext();
 
 export default class RoomProvider extends Component {
+  static contextType = APIErrorContext;
   
   state = {
     rooms: [],
@@ -27,15 +32,12 @@ export default class RoomProvider extends Component {
   };
   getRooms = async () => {
     try {
-  //     let response = await Client.getEntries({
-    // content_type: "beachResortRoom"
-  // });
          let response = await axios({
           method: "get",
           url:"http://localhost:27000/rooms",
             // `/?${search}&${filter}&page=${page}&limit=16&fields=title,shortDescription,media.thumbnail`,
           headers: {
-            Authorization:'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1OTdjOTNlMmEzMmM0NDUxOGViMDY5NCIsImlhdCI6MTcwNDQ2NDE5NywiZXhwIjoxNzEyMjQwMTk3fQ.aGWaNcSHFaqI7kfcCteMurEiz1oa379ub45KCe0J7TM',
+            Authorization:this.props.auth,
           },
       })
       // console.log({response:response.data.data.data})
@@ -54,8 +56,11 @@ export default class RoomProvider extends Component {
         maxSize
       });
       return 1;
-    } catch (error) {
-      console.log(error);
+    }  catch(error){
+      const {status, message} = error.response.data
+      console.log({status, message})
+      const { addError } = this.context
+      addError(message, status)
     }
   };
   async componentDidMount() {
@@ -135,11 +140,67 @@ export default class RoomProvider extends Component {
   };
   backup = () => {
 
-  const link = document.createElement('a');
-  link.href = "http://localhost:27000/rooms/backup";
-  document.body.appendChild(link);
-  link.click(); 
-  link.remove()
+    try{ 
+      const link = document.createElement('a');
+      link.href = "http://localhost:27000/rooms/backup";
+      document.body.appendChild(link);
+      link.click(); 
+      link.remove()
+    } catch(error){
+      const {status, message} = error.response.data
+      console.log({status, message})
+      const { addError } = this.context
+      addError(message, status)
+    }
+  };
+  updateRooms = async (id, data) => {
+  try 
+    {
+        const confirmed = window.confirm("Are you sure you want to make this change?")  
+        
+        if (confirmed){
+
+        await axios({
+          method: "patch",
+          url:`http://localhost:27000/rooms/${id}`,
+          data,
+          headers: {
+            Authorization:this.props.auth,
+          },
+        })
+
+        await this.getRooms();}
+    } 
+    catch(error) {
+      const {status, message} = error.response.data
+      console.log({status, message})
+      const { addError } = this.context
+      addError(message, status)
+    }
+  };
+  deleteRoom = async (id) => {
+    try{
+      const confirmed = window.confirm("Are you sure you want to make this change?")  
+      
+      if (confirmed){
+
+      await axios({
+          method: "delete",
+          url:`http://localhost:27000/rooms/${id}`,
+          headers: {
+            Authorization:this.props.auth,
+          },
+      })
+
+      await this.getRooms();
+    }
+  }
+  catch(error){
+    const {status, message} = error.response.data
+    console.log({status, message})
+    const { addError } = this.context
+    addError(message, status)
+  }
   }
 
   render() {
@@ -150,6 +211,8 @@ export default class RoomProvider extends Component {
           getRooms: this.getRooms,
           getRoom: this.getRoom,
           handleChange: this.handleChange,
+          updateRooms: this.updateRooms,
+          deleteRoom: this.deleteRoom,
           backup:this.backup
         }}
       >
@@ -158,6 +221,7 @@ export default class RoomProvider extends Component {
     );
   }
 }
+
 const RoomConsumer = RoomContext.Consumer;
 
 export { RoomProvider, RoomConsumer, RoomContext };

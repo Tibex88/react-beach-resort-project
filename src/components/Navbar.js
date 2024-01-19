@@ -20,70 +20,43 @@ function Navbar ({ context }) {
   const handleToggle = () => {
     this.setState({ isOpen: !state.isOpen });
   };
-  const {firstName, lastName, me,auth,logout, isLoggedIn} = context
+  const {firstName, lastName, me,logout, isLoggedIn} = context
 
     return (
-      // <ThemeProvider theme={defaultTheme}>
-      // <GlobalStyles styles={{ ul: { margin: 0, padding: 0, listStyle: 'none' } }} />
-      // <CssBaseline />
-      <AppBar
-      position="static"
-      color="default"
-      elevation={0}
-      sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}
-    >
+      
+      <AppBar position="static" color="default" elevation={0} sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}` }} >
+
       <Toolbar display="flex" gap="5px" alignItems={"center"} justifyContent="center" margin="10px 0">
-      {/* <img src={logo} alt="Beach Resort" /> */}
+      
         <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
           Beach Resort
         </Typography>
-        <nav style={{display:"flex", gap:"5"}}>
-          <NavLink
-            to="/"
-          >
-            Home
-          </NavLink>
-          <NavLink
-            // variant="button"
-            // color="text.primary"
-            to="/rooms"
-            // sx={{ my: 1, mx: 1.5 }}
-          >
-            Search
-          </NavLink>
-          {
-          (isLoggedIn && me.role !== "user")
-          &&
-           me.role !== "user" ?
+        
+        <nav className=" nav-links" style={{display:"flex", gap:"5"}}>
+          <NavLink to="/" > Home </NavLink>
+          <NavLink to="/rooms" > Search </NavLink>
+          { (isLoggedIn && me.role !== "user") && me.role !== "user" ?
             <>
-          <NavLink to="/dashboard/rooms">
-            Rooms
-          </NavLink>
-          <NavLink to="/dashboard/users">
-            Users
-          </NavLink>
-          <NavLink
-            to="/profile"
-          >
-            Profile
-          </NavLink>
-            </>
-            :
-            <></>
-          }
-
-         
+              <NavLink to="/dashboard/rooms"> Rooms </NavLink>
+              <NavLink to="/dashboard/users"> Users </NavLink>
+              <NavLink to="/profile"> Profile </NavLink>
+            </> : <></> 
+          }        
         </nav>
-        <Button 
 
-        onClick={async ()=>{ isLoggedIn && await logout() }}
-        variant="outlined" sx={{ my: 1, mx: 1.5 }}>
-            { isLoggedIn ? "Logout" : "Signin" }
-        </Button>
+        { isLoggedIn ? 
+          <Button onClick={()=>{ logout() }} variant="outlined" sx={{ my: 1, mx: 1.5 }}>
+              Logout
+          </Button>
+            :
+          <Button href="/signin" variant="outlined" sx={{ my: 1, mx: 1.5 }} > 
+                Signin
+          </Button> 
+         }
+        
       </Toolbar>
     </AppBar>
-    // </ThemeProvider>
     );
   }
 
-export default withUserConsumer(Navbar); 
+export default withUserConsumer(Navbar);

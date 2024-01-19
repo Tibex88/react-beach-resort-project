@@ -140,15 +140,14 @@ export default class UsersTable extends Component {
   isSelected = (trackingNo) => this.selected.indexOf(trackingNo) !== -1;
 
 render(){
-  let { loading, users, backup, toggleRole, getUsers } = this.context;
-  // await getUsers()
-  // console.log({users})
+  let { loading, users, backup, toggleUser, getUsers } = this.context;
+
   return (
     <Grid item xs={12} md={7} lg={8}>
     
     <Grid container alignItems="center"  flexDirection="row" gap={5}>
       <Grid item>
-        <Typography variant="h5">Users ({users.length})</Typography>
+        <Typography style={{padding:"20px"}} variant="h5">Users ({users.length})</Typography>
       </Grid>
       <Grid  />
       <Grid item>
@@ -222,7 +221,7 @@ render(){
                   {
                     row.role === "user" &&
                     <Grid item>
-                      <FaArrowCircleUp onClick={()=>{ toggleRole(row._id,"receptionist" ) }} 
+                      <FaArrowCircleUp onClick={()=>{ toggleUser(row._id,{role:"receptionist"} ) }} 
                         />
                     </Grid>
                   }
@@ -231,21 +230,21 @@ render(){
                     row.role === "receptionist" &&
 
                     <Grid item>
-                      <FaArrowCircleDown onClick={()=>{ toggleRole(row._id,"user" ) }} />
+                      <FaArrowCircleDown onClick={()=>{ toggleUser(row._id,{role:"user"}) }} />
                     </Grid>
                   }
 
                   
                   {
-                    !row.active  &&
+                    (!row.active && row.role !== "manager" ) &&
                     <Grid item>
-                      <FaLock />
+                      <FaLock onClick={()=>{ toggleUser(row._id,{active:true} ) }} />
                     </Grid>
                   }
                   {
-                    row.active &&
+                    (row.active  && row.role !== "manager" ) &&
                     <Grid item>
-                      <FaLockOpen />
+                      <FaLockOpen onClick={()=>{ toggleUser(row._id,{active:false} ) }} />
                     </Grid>
                   }
 

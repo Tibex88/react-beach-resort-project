@@ -106,28 +106,28 @@ function CustomTableHead({ order, orderBy }) {
   );
 }
 
-
-
 export default class RoomsTable extends Component {
   
   static contextType = RoomContext;
 
-
   order = 'asc';
   orderBy ='trackingNo';
   selected =[];
-
+  // auth = this.props.auth
+  
   isSelected = (trackingNo) => this.selected.indexOf(trackingNo) !== -1;
-
+  
   render(){
-    let { rooms, backup, getRooms } = this.context;
+    const { auth } = this.props;
+    console.log(this.props)
+    let { rooms, backup, getRooms, updateRooms, deleteRoom } = this.context;
     return (
     <>
       <Grid item xs={12} md={7} lg={8}>
       
       <Grid container alignItems="center" flexDirection="row" gap={5}>
         <Grid item>
-          <Typography variant="h5">Rooms ({rooms.length})</Typography>
+          <Typography style={{padding:"20px"}} variant="h5">Rooms ({rooms.length})</Typography>
         </Grid>
 
         <Grid item>
@@ -148,7 +148,6 @@ export default class RoomsTable extends Component {
           <DialogSelect /> 
         </Typography>
       </Grid>
-
 
         <Grid  />
       </Grid>
@@ -210,17 +209,16 @@ export default class RoomsTable extends Component {
                     <TableCell align="left">{row.available}</TableCell>
                     
                     <TableCell align="left">
-                      {/* {row.active} */}
                       {
                     !row.active  &&
                     <Grid item>
-                      <FaLock />
+                      <FaLock onClick={()=>{updateRooms(row._id, {active:true})}} />
                     </Grid>
                   }
                   {
                     row.active &&
                     <Grid item>
-                      <FaLockOpen />
+                      <FaLockOpen onClick={()=>{updateRooms(row._id, {active:false})}} />
                     </Grid>
                   }
                       </TableCell>
@@ -233,7 +231,7 @@ export default class RoomsTable extends Component {
                         </Grid> */}
 
                         <Grid item>
-                        <MdDelete />
+                        <MdDelete onClick={()=>{deleteRoom(row._id)}} />
                         </Grid>
 
                       </Grid>    

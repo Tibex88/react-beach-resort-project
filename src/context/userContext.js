@@ -20,7 +20,7 @@ export default class UserProviderWoutRouter extends Component {
     me:{},
     loading: false,
     isLoggedIn:false,
-    auth: false
+    auth: false,
   };
   setToken = (token) =>{
     localStorage.setItem("token",token)
@@ -62,7 +62,7 @@ export default class UserProviderWoutRouter extends Component {
 
       this.setState({
         // users,
-        me
+        me,
       })
 
     } catch (error) {
@@ -74,7 +74,6 @@ export default class UserProviderWoutRouter extends Component {
     }
   };
   login = async (event) => {
-    
     try{
       console.log("logging in...")
       event.preventDefault();
@@ -134,9 +133,9 @@ export default class UserProviderWoutRouter extends Component {
     me:{},
     })
     const { history } = this.props;
-    // history.push('/signin');
-    history.replace('/signin', 
-    )
+    history.push('/signin');
+    // history.replace('/signin', 
+    // )
     // this.setState({
     // //   auth:null,
     // //   isLoggedIn:false
@@ -163,10 +162,10 @@ export default class UserProviderWoutRouter extends Component {
       let response = await axios({
         method: "post",
         data:{
-          firstName:form.get('firstName'), 
+          firstName:form.get('firstName'),
           lastName:form.get('lastName'),
           role:"user",
-          email:form.get('email'), 
+          email:form.get('email'),
           password:form.get('password'),
           passwordConfirm:form.get('passwordConfirm'),
         },
@@ -199,19 +198,20 @@ export default class UserProviderWoutRouter extends Component {
 
     }
   };
-  toggleRole = async (id, role) => {
+  toggleUser = async (id, data) => {
 
     try{    
-      
-      await axios({
-      method: "patch",
-      url:`http://localhost:27000/users/${id}`,
-      data:{ role },
-      headers: { Authorization:this.state.auth },
-    })
-    await this.getUsers();
+      const confirmed = window.confirm("Are you sure you want to make this change?")  
+      if (confirmed){
 
-    // console.log(response)
+        await axios({
+          method: "patch",
+          url:`http://localhost:27000/users/${id}`,
+          data,
+          headers: { Authorization:this.state.auth },
+        })
+        await this.getUsers();
+      }
 
   }
   catch(error){
@@ -235,28 +235,13 @@ export default class UserProviderWoutRouter extends Component {
 
     }
   }
-  // formatData(items) {
-  //   let tempItems = items.map(item => {
-  //     let id = item._id;
-  //     console.log(id)
-  //     let images = item.images.map(image => image.url);
-  //     console.log(images)
-  //     let room = { ...item, images, id };
-  //     return room;
-  //   });
-  //   return tempItems;
-  // }
   getUsers = async () => {
     try{
         let response = await axios({
             method: "get",
             url:
             "http://localhost:27000/users",
-              // `/?${search}&${filter}&page=${page}&limit=16&fields=title,shortDescription,media.thumbnail`,
-            headers: {
-              // Authorization:'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1OTdjOTNlMmEzMmM0NDUxOGViMDY5NCIsImlhdCI6MTcwNTU3ODQ4MiwiZXhwIjoxNzEzMzU0NDgyfQ.voN8rYEKlH3Gct2m3FKSMRnCnpvm092CuzvONQUkX_s',
-              Authorization:this.state.auth,
-            },
+            headers: { Authorization:this.state.auth,},
         })
 
         console.log({r:response.data.data})
@@ -354,10 +339,14 @@ export default class UserProviderWoutRouter extends Component {
           logout:this.logout,
           handleChange: this.handleChange,
           backup:this.backup,
-          toggleRole:this.toggleRole,
+          toggleUser:this.toggleUser,
         }}
       >
-        {this.props.children}
+         {React.Children.map(this.props.children, child => {
+          // Clone the child element with additional props
+          return React.cloneElement(child, { auth:this.state.auth });
+        })}
+        {/* {this.props.children} */}
       </UserContext.Provider>
     );
   }

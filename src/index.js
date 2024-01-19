@@ -4,13 +4,26 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { RoomProvider } from "./context/roomContext";
-import { UserProvider } from "./context/userContext";
+import { UserProvider, UserContext } from "./context/userContext";
 import { APIErrorProvider } from "./context/errorContext"
+
 // import { NavigationProvider } from "./context/navigationContext";
 import { BrowserRouter } from "react-router-dom";
 
+import { useContext } from "react";
+
+// function User(){
+//   const {auth} = useContext(UserContext)
+
+//  return(
+//       <>
+//       {auth}
+//       </>
+//  )
+// }
+
 ReactDOM.render(
-<BrowserRouter>
+  <BrowserRouter>
   {/* <NavigationProvider> */}
 <APIErrorProvider>
   <UserProvider>
