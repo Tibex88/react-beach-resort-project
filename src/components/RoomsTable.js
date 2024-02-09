@@ -4,6 +4,7 @@ import { Component, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
 import { RoomContext } from "../context/roomContext";
+import Banner from "./Banner"
 
 import { FaLock, FaLockOpen, FaPlus } from "react-icons/fa";
 import { MdBackup, MdDelete } from "react-icons/md";
@@ -118,11 +119,15 @@ export default class RoomsTable extends Component {
   isSelected = (trackingNo) => this.selected.indexOf(trackingNo) !== -1;
   
   render(){
-    const { auth } = this.props;
-    console.log(this.props)
+    // const { me } = this.props;
+    // console.log(this)
     let { rooms, backup, getRooms, updateRooms, deleteRoom } = this.context;
     return (
     <>
+            {/* <Banner 
+          title="luxurious rooms"
+          subtitle="deluxe rooms starting at $299"
+        /> */}
       <Grid item xs={12} md={7} lg={8}>
       
       <Grid container alignItems="center" flexDirection="row" gap={5}>
@@ -142,12 +147,14 @@ export default class RoomsTable extends Component {
         </Typography>
       </Grid>
 
-
+      {
+        // me.role === "manager" && 
         <Grid item>
         <Typography variant="h5">
           <DialogSelect /> 
         </Typography>
       </Grid>
+        }
 
         <Grid  />
       </Grid>
@@ -199,11 +206,12 @@ export default class RoomsTable extends Component {
                     
                     <TableCell align="left">{row.capacity}</TableCell>
                     
-                    <TableCell align="left">
+                      <TableCell align="left">
                       {/* {row.reservation} */}
-                      {/* <IoMdEye /> */}
+                    {
+                        row.active && 
                       <DialogReservation />
-                      {/* <IoMdEyeOff /> */}
+                    }
                     </TableCell>
                     
                     <TableCell align="left">{row.available}</TableCell>

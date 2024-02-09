@@ -18,6 +18,7 @@ import CheckPasswordStrength from '../components/Form';
 
 import { UserContext } from "../context/userContext";
 import { useContext } from "react";
+import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 
 
 
@@ -30,10 +31,11 @@ export default function ResetPassword() {
 
   const [pwd, setPwd] = React.useState("")
   const [pwdC, setPwdC] = React.useState("")
+  const params = useParams( );
 
   const context = useContext(UserContext);
   const {
-    signup
+    resetPwd
   } = context;
 
 
@@ -56,39 +58,8 @@ export default function ResetPassword() {
           <Typography component="h1" variant="h5">
             Reset Password
           </Typography>
-          <Box component="form" noValidate onSubmit={signup} sx={{ mt: 3 }}>
+          <Box component="form" noValidate onSubmit={(event)=>{resetPwd(event, params)}} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              {/* <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="given-name"
-                  name="firstName"
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="First Name"
-                  autoFocus
-                />
-              </Grid> 
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                />
-              </Grid> */}
               <Grid item xs={12}>
                 <TextField
                   required
@@ -106,10 +77,10 @@ export default function ResetPassword() {
                 <TextField
                   required
                   fullWidth
-                  name="passwordConfirm"
-                  label="New Password"
+                  name="confirmPassword"
+                  label="Confirm Password"
                   type="password"
-                  id="password"
+                  id="confirmPassword"
                   autoComplete="new-password"
                   onChange={(e)=>{setPwdC(e.target.value)}}
                 />

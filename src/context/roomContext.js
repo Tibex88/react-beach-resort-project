@@ -64,7 +64,9 @@ export default class RoomProvider extends Component {
     }
   };
   async componentDidMount() {
-    await this.getRooms();
+    // if(this.props.isLoggedIn){
+      await this.getRooms();
+    // }
   }
   formatData(items) {
     let tempItems = items.map(item => {
@@ -141,11 +143,14 @@ export default class RoomProvider extends Component {
   backup = () => {
 
     try{ 
+      let password = String(prompt("Enter a password"))
+      if (password !== "null" && password !== ""){
       const link = document.createElement('a');
-      link.href = "http://localhost:27000/rooms/backup";
+      link.href = `http://localhost:27000/rooms/backup?password=${password}`;
       document.body.appendChild(link);
       link.click(); 
       link.remove()
+      }
     } catch(error){
       const {status, message} = error.response.data
       console.log({status, message})

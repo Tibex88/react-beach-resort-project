@@ -97,13 +97,8 @@ export default class UserProviderWoutRouter extends Component {
     await this.getData();
     await this.getUsers();
 
-
-    // console.log({auth:this.state.auth})
-    // const history = useHistory();
     const { history } = this.props;
     history.replace('/');
-    // const { navigateTo } = useContext(NavigationContext);
-    // navigateTo('/home');
 
       return true;
     }
@@ -152,6 +147,74 @@ export default class UserProviderWoutRouter extends Component {
       addError(message, status)
 
     }
+  };
+  forgotPwd = async (event) =>{
+    try{
+      event.preventDefault();
+      const form = new FormData(event.currentTarget);
+      console.log(form.get('email'))
+      console.log("forgot pwd...")
+    await axios({
+        method: "post",
+        url:"http://localhost:27000/users/forgotPassword",
+        data:{
+          email:form.get('email')
+        }
+    })
+
+    }catch(error){
+      console.log(error)
+      // const {status, message} = error.data
+      // console.log({status, message})
+      // const { addError } = this.context
+      // addError(message, status)
+
+    }
+  };
+  resetPwd = async (event,params)=>{
+    try{
+
+      console.log({event})
+      console.log(params.token)
+      event.preventDefault();
+      const form = new FormData(event.currentTarget);
+      let response = await axios({
+          method: "post",
+          url:`http://localhost:27000/users/resetPassword/${params.token}`,
+          data:{
+            password:form.get('password'), confirmPassword:form.get('confirmPassword')
+          }
+      })
+      
+      console.log("reset pwd...")
+      const {token, data} =(response.data)
+      
+      this.setState({
+        me: data.user,
+        auth: "Bearer " + token,
+        isLoggedIn:true
+      })
+
+    await this.getData();
+    await this.getUsers();
+
+
+    // console.log({auth:this.state.auth})
+    // const history = useHistory();
+    // const { history } = this.props;
+    // history.replace('/');
+
+        
+      const { history } = this.props;
+      history.push('');
+  
+      }catch(error){
+        const {status, message} = error.response.data
+        console.log({status, message})
+        const { addError } = this.context
+        addError(message, status)
+  
+      }
   };
   signup = async (event) => {
     
@@ -223,7 +286,7 @@ export default class UserProviderWoutRouter extends Component {
   }
   async componentDidMount() {
     try{
-    //   await this.login();
+      // await this.login();
     //   await this.getData();
     //   await this.getUsers();
     }
@@ -261,68 +324,15 @@ export default class UserProviderWoutRouter extends Component {
 
     }
   };
-  handleChange = event => {
-    const target = event.target;
-    const value = target.type === "checkbox" ? target.checked : target.value;
-    const name = target.name;
-    console.log(name, value);
-
-    this.setState(
-      {
-        [name]: value
-      },
-      this.filterRooms
-    );
-  };
-  filterRooms = () => {
-    let {
-      rooms,
-      type,
-      capacity,
-      price,
-      minSize,
-      maxSize,
-      breakfast,
-      pets
-    } = this.state;
-
-    let tempRooms = [...rooms];
-    // transform values
-    // get capacity
-    capacity = parseInt(capacity);
-    price = parseInt(price);
-    // filter by type
-    if (type !== "all") {
-      tempRooms = tempRooms.filter(room => room.type === type);
-    }
-    // filter by capacity
-    if (capacity !== 1) {
-      tempRooms = tempRooms.filter(room => room.capacity >= capacity);
-    }
-    // filter by price
-    tempRooms = tempRooms.filter(room => room.price <= price);
-    //filter by size
-    tempRooms = tempRooms.filter(
-      room => room.size >= minSize && room.size <= maxSize
-    );
-    //filter by breakfast
-    if (breakfast) {
-      tempRooms = tempRooms.filter(room => room.breakfast === true);
-    }
-    //filter by pets
-    if (pets) {
-      tempRooms = tempRooms.filter(room => room.pets === true);
-    }
-    this.setState({
-      sortedRooms: tempRooms
-    });
-  };
   backup = () => {
-    const link = document.createElement('a');
-    link.href = "http://localhost:27000/users/backup";
-    document.body.appendChild(link);
-    link.click(); 
-    link.remove()
+    let password = String(prompt("Enter a password"))
+    if (password !== "null" && password !== ""){
+      const link = document.createElement('a');
+      link.href = `http://localhost:27000/users/backup?password=${password}`;
+      document.body.appendChild(link);
+      link.click(); 
+      link.remove()
+    }
     }
 
   render() {
@@ -340,11 +350,13 @@ export default class UserProviderWoutRouter extends Component {
           handleChange: this.handleChange,
           backup:this.backup,
           toggleUser:this.toggleUser,
+          forgotPwd:this.forgotPwd,
+          resetPwd:this.resetPwd,
         }}
       >
          {React.Children.map(this.props.children, child => {
           // Clone the child element with additional props
-          return React.cloneElement(child, { auth:this.state.auth });
+          return React.cloneElement(child, { auth:this.state.auth, me:this.state.me, isLoggedIn:this.isLoggedIn });
         })}
         {/* {this.props.children} */}
       </UserContext.Provider>

@@ -15,12 +15,17 @@ import { IoMdEye } from "react-icons/io";
 
 import { TextField } from '@mui/material';
 
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+
 export default function DialogReservation() {
   const [open, setOpen] = React.useState(false);
   const [age, setAge] = React.useState('');
 
   const fields = [
-    "Name","CheckIn","CheckOut"
+    "Name",
+    // "CheckIn","CheckOut"
   ]
 
   const handleChange = (event) => {
@@ -79,7 +84,11 @@ export default function DialogReservation() {
                 )
               })
             }
-            </FormControl>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <DatePicker label="Check In"  />
+        <DatePicker label="Check Out" />
+    </LocalizationProvider>           
+    </FormControl>
             {/* <FormControl sx={{ m: 1, minWidth: 120 }}>
               <InputLabel id="demo-dialog-select-label">Age</InputLabel>
               <Select

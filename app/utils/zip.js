@@ -2,6 +2,8 @@
 // const archiver = require('archiver');
 const zipUnzipper = require('zip-and-unzip');;
 const JSZip = require("jszip");
+const archiver = require('archiver');
+var Minizip = require('minizip-asm.js');
 // const zipUnzipper = require('../index.js');
 const path = require('path');
 const fs = require('fs');
@@ -16,9 +18,10 @@ const logger = require('./logger');
 exports.zip = async (req,res,next) =>  {
 
     logger.info("Backing up...")
+
+    const {password} = req.query
     const path = './backups'
     const filename = "archive.zip"
-    // console.log(req.baseUrl.split("/")[1])
     const model = req.baseUrl.split("/")[1]
     let data;
 
@@ -32,17 +35,11 @@ exports.zip = async (req,res,next) =>  {
       data = await query.query;
     }
 
+    var mz = new Minizip();
+    mz.append(`${model}-backup.json`,JSON.stringify(data), {password});
 
-    const zip = new JSZip();
 
-    // zip.setPassword(1234);
-
-    zip.file(`${model}.json`,JSON.stringify(data))
-    // zip.file("rooms.json",JSON.stringify(rooms))
-
-    const content = await zip.generateAsync({type:"nodeBuffer"})
-
-    fs.writeFileSync(path + "/" + filename, content)
+    fs.writeFileSync(path + "/" + filename, new Buffer(mz.zip()))
 
     res.download(path+"/"+filename);
 

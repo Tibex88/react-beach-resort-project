@@ -25,8 +25,8 @@ const router = express.Router();
 
 router
     .route("/")
-    .get(protect,restrictTo("manager", "receptionist","user"),getAllRooms)
-    .post(protect,restrictTo("manager", "receptionist"), createRoom)   
+    .get(getAllRooms)
+    .post(protect,restrictTo("manager"), createRoom)   
 
 router
     .route("/backup")
@@ -38,6 +38,6 @@ router
   .patch(protect,restrictTo("manager","receptionist"),
 //   filterRoomUpdateFields("reservation"),
   updateRoom) //edit room
-  .delete(protect, restrictTo("manager","receptionist"),deleteRoom)
+  .delete(protect, restrictTo("manager"),deleteRoom)
 
 module.exports = router;

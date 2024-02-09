@@ -31,23 +31,18 @@ app.use(xss())
 app.use(mongoSanitize({ allowDots: true }));
 app.use(
   hpp()
-  // whitelist: [
-  // list of parameters that can be duplicated
-  // ]
+
 );
-////////
+
 app.use(methodOverride("_method"));
 
 //Middlewares
 app.use(
   cors({
     origin: "*",
-    // withCredentials: true,
-    // credentials: "include",
   })
 );
 app.use(express.static("../public"));
-// app.use(express.static("../Client/public")); //  path.join(__dirname, "public")
 
 
 if (process.env.NODE_ENV === "development") {

@@ -14,6 +14,7 @@ import RoomsTable from "./components/RoomsTable.js";
 import UsersTable from "./components/UsersTable.js";
 import ForgotPassword from "./pages/ForgotPassword.js";
 import ResetPassword from "./pages/ResetPassword.js";
+import Profile from "./pages/Profile.js";
 
 import Alert from '@mui/material/Alert';
 
@@ -42,11 +43,11 @@ function App() {
         <Route exact path="/signin" component={SignIn} />
         <Route exact path="/forgotpassword/" component={ForgotPassword} />
         <Route exact path="/resetpassword/:token" component={ResetPassword} />
-        <Route path='/profile' component={RoomsTable} /> 
+        <Route path='/profile' component={Profile} /> 
 
-        <Route exact path="/dashboard" component={DashBoard}>
+        {/* <Route exact path="/dashboard" component={DashBoard}> */}
         {/* <Route path='/users' component={Topic} /> */}
-        </Route>
+        {/* </Route> */}
         <Route path='/dashboard/rooms' component={RoomsTable} /> 
         <Route path='/dashboard/users' component={UsersTable} /> 
         <Route component={Error} />

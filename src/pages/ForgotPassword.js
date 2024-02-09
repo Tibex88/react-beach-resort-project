@@ -25,20 +25,8 @@ export default function ForgotPassword() {
 
   const context = useContext(UserContext);
   const {
-    login
+    forgotPwd
   } = context;
-
-  const handleSubmit = (event) => {
-    try{
-      console.log(typeof login)
-      event.preventDefault();
-      const data = new FormData(event.currentTarget);
-       login({email: data.get('email'),password: data.get('password')})
-    }
-    catch(error){
-      console.log(error)
-    }
-  };
 
 
 
@@ -59,7 +47,7 @@ export default function ForgotPassword() {
           <Typography component="h1" variant="h5">
             Forgot Password
           </Typography>
-          <Box component="form" onSubmit={login} noValidate sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={forgotPwd} noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required

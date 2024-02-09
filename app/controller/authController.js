@@ -78,6 +78,9 @@ exports.login = catchAsync(async (req, res, next) => {
   const user = await User.findOne({
     email,
   }).select("+password");
+  console.log({user})
+
+  if (!user.active){ return next(new APIError("Your have been deactivated, Please contact manager for further instructions", 401))}
 
   if (!user || !(await user.correctPassword(password, user.password))) {
     return next(new APIError("Incorrect email or password", 401));

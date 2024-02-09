@@ -40,17 +40,17 @@ export default function SignIn() {
     login
   } = context;
 
-  const handleSubmit = (event) => {
-    try{
-      console.log(typeof login)
-      event.preventDefault();
-      const data = new FormData(event.currentTarget);
-       login({email: data.get('email'),password: data.get('password')})
-    }
-    catch(error){
-      console.log(error)
-    }
-  };
+  // const handleSubmit = (event) => {
+  //   try{
+  //     console.log(typeof login)
+  //     event.preventDefault();
+  //     const data = new FormData(event.currentTarget);
+  //      login({email: data.get('email'),password: data.get('password')})
+  //   }
+  //   catch(error){
+  //     console.log(error)
+  //   }
+  // };
 
 
 
